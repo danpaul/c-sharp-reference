@@ -18,6 +18,11 @@ This document serves as a quick reference for beginning C# programmers.
     - [Relational operators examples](#relational-operators-examples)
   - [Unary and binary operators](#unary-and-binary-operators)
     - [Example unary and binary operators](#example-unary-and-binary-operators)
+- [Console input and output](#console-input-and-output)
+  - [Output](#output)
+    - [Output example](#output-example)
+  - [Input](#input)
+    - [Input example](#input-example)
 
 ## Variables and basic data types
 
@@ -160,4 +165,30 @@ x -= 5; // x is 15
 x *= 2; // x is 30
 x /= 5; // x is 6
 x %= 2; // x is 0
+```
+
+## Console input and output
+
+For console applications, you can output text that the user can read and receive input text that the user writes.
+
+### Output
+
+The main methods to write output to the console are `Console.Write` and `Console.WriteLine`. The difference between the methods is that `Console.WriteLine` method will add a new line in the console.
+
+#### Output example
+
+```csharp
+Console.Write("hello!"); // this will not create a new line
+Console.WriteLine("hell again"); // this will add a new line of text to the console
+```
+
+### Input
+
+To read text that the user enters, you can use `Console.Read` (no new line) and `Console.ReadLine` (adds a new line). Input is always returned as a `string`.
+
+#### Input example
+
+```csharp
+string input = Console.Read();
+string input2 = Console.ReadLine(); // adds a new line
 ```
