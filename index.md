@@ -4,6 +4,14 @@ This document serves as a quick reference for beginning C# programmers.
 
 ## Contents
 
+1. [Variables and basic data types](variables-and-basic-data-types)
+   1. Basic data types
+   2. Declaring and defining variables
+   3. Example, declaring and defining variables using basic data types
+2. Comments
+3. Operators
+   1. Math operators
+
 ## Variables and basic data types
 
 Variables hold data in C#. Variables must have a type. The variable's type is the type of data the variable can hold.
@@ -118,4 +126,31 @@ Console.WriteLine(myIntB >= myIntC); // ~> true
 Console.WriteLine(myIntB <= myIntC); // ~> true
 Console.WriteLine(myIntB == myIntC); // ~> true
 Console.WriteLine(myIntB != myIntC); // ~> false
+```
+
+### Unary and binary operators
+
+Unary and binary are shorthand operators that perform an operation and assign a value in a single statement.
+
+Unary and binary operators:
+
+- `++` increments (increases) value by one
+- `--` decrements (decreases) value by one
+- `+=` adds a value and assigns it
+- `-=` subtracts a value and assigns it
+- `*=` multiples a value and assigns it
+- `/=` divides a value and assigns it
+- `%=` performs module operation and assigns it
+
+#### Example unary and binary operators
+
+```csharp
+int x = 10;
+x++; // x is 11
+x--; // x is 10
+x += 10; // x is 20
+x -= 5; // x is 15
+x *= 2; // x is 30
+x /= 5; // x is 6
+x %= 2; // x is 0
 ```
