@@ -4,13 +4,20 @@ This document serves as a quick reference for beginning C# programmers.
 
 ## Contents
 
-1. [Variables and basic data types](variables-and-basic-data-types)
-   1. Basic data types
-   2. Declaring and defining variables
-   3. Example, declaring and defining variables using basic data types
-2. Comments
-3. Operators
-   1. Math operators
+- [About](#about)
+- [Contents](#contents)
+- [Variables and basic data types](#variables-and-basic-data-types)
+  - [Basic data types:](#basic-data-types)
+  - [Declaring and defining variables](#declaring-and-defining-variables)
+    - [Example, declaring and defining variables using basic data types](#example-declaring-and-defining-variables-using-basic-data-types)
+- [Comments](#comments)
+- [Operators](#operators)
+  - [Math operators](#math-operators)
+    - [Math operator examples](#math-operator-examples)
+  - [Relational operators](#relational-operators)
+    - [Relational operators examples](#relational-operators-examples)
+  - [Unary and binary operators](#unary-and-binary-operators)
+    - [Example unary and binary operators](#example-unary-and-binary-operators)
 
 ## Variables and basic data types
 
