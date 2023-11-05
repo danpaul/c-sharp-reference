@@ -23,6 +23,12 @@ This document serves as a quick reference for beginning C# programmers.
     - [Output example](#output-example)
   - [Input](#input)
     - [Input example](#input-example)
+- [Conditional statements](#conditional-statements)
+  - [If statements](#if-statements)
+  - [If/else statements](#ifelse-statements)
+  - [If/else-if statements](#ifelse-if-statements)
+  - [Switch statements](#switch-statements)
+    - [Switch statement example](#switch-statement-example)
 
 ## Variables and basic data types
 
@@ -191,4 +197,75 @@ To read text that the user enters, you can use `Console.Read` (no new line) and 
 ```csharp
 string input = Console.Read();
 string input2 = Console.ReadLine(); // adds a new line
+```
+
+## Conditional statements
+
+Conditional statements allow you to execute code only if certain conditions are true.
+
+### If statements
+
+An if statement gets executed only if a condition is true.
+
+```csharp
+int x = 3;
+int y = 4;
+if(x < 4){
+    Console.WriteLine("x is less than y");
+}
+```
+
+### If/else statements
+
+If/else statements include a block of code that gets executed if they if condition is false.
+
+```csharp
+int x = 3;
+int y = 4;
+if(x < 4){
+    Console.WriteLine("x is less than y");
+} else {
+    Console.WriteLine("y is less than x");
+}
+```
+
+### If/else-if statements
+
+If/else-if statements have an unlimited number of conditions that can be checked.
+
+```csharp
+int x = 3;
+if(x == 1){
+    Console.WriteLine("x is 1");
+} else if (x == 2){
+    Console.WriteLine("x is 2");
+} else if (x == 3){
+    Console.WriteLine("x is 3");
+} else {
+    // final else statement is optional
+    Console.WriteLine("x is neither 1, 2, or 3");
+}
+```
+
+### Switch statements
+
+Switch statements check that a variable matches a condition. `break` should always be used inside a matching statement inside a switch condition. An optional `default` case can be used in case none of the conditions match.
+
+#### Switch statement example
+
+```csharp
+int place = 2;
+switch(place){
+    case 1:
+        Console.WriteLine("you receive a gold");
+        break;
+    case 2:
+        Console.WriteLine("you receive a silver");
+        break;
+    case 3:
+        Console.WriteLine("you receive a bronze");
+        break;
+    default:
+        Console.WriteLine("you do not receive a meal");
+}
 ```
