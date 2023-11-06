@@ -11,6 +11,9 @@ This document serves as a quick reference for beginning C# programmers.
   - [Declaring and defining variables](#declaring-and-defining-variables)
     - [Example, declaring and defining variables using basic data types](#example-declaring-and-defining-variables-using-basic-data-types)
 - [Comments](#comments)
+- [String interpolation](#string-interpolation)
+  - [String concatenation with addition operator](#string-concatenation-with-addition-operator)
+  - [String interpolation with brackets](#string-interpolation-with-brackets)
 - [Operators](#operators)
   - [Math operators](#math-operators)
     - [Math operator examples](#math-operator-examples)
@@ -22,13 +25,17 @@ This document serves as a quick reference for beginning C# programmers.
   - [Output](#output)
     - [Output example](#output-example)
   - [Input](#input)
-    - [Input example](#input-example)
+    - [Parsing numeric values from console input](#parsing-numeric-values-from-console-input)
 - [Conditional statements](#conditional-statements)
   - [If statements](#if-statements)
   - [If/else statements](#ifelse-statements)
   - [If/else-if statements](#ifelse-if-statements)
   - [Switch statements](#switch-statements)
     - [Switch statement example](#switch-statement-example)
+- [Iteration](#iteration)
+  - [While loop](#while-loop)
+  - [Do-while loops](#do-while-loops)
+  - [For loops](#for-loops)
 
 ## Variables and basic data types
 
@@ -84,6 +91,36 @@ Comments are text in the program that is ignored by the compiler. Comments are t
   This is a multiline comment.
   Multiline comments can take up multiple lines.
 */
+```
+
+## String interpolation
+
+Interpolation means adding data to a string. C# has a few methods for interpolating strings.
+
+### String concatenation with addition operator
+
+```csharp
+int i = 3;
+Console.Writeline("The value of i is: " + i); // ~> The value of i is 3
+```
+
+### String interpolation with brackets
+
+Data can be added to strings using brackets in two main ways:
+
+Using a `$` character with brackets:
+
+```csharp
+int i = 3;
+Console.WriteLine($"The value of i is {i}"); // ~> The value of i is 3
+```
+
+Using numbered arguments and brackets:
+
+```csharp
+int i = 3;
+int j = 4;
+Console.WriteLine("The values of i and j are {0} and {1}", i, j); // ~> The values of i and j are 3 and 4
 ```
 
 ## Operators
@@ -190,13 +227,24 @@ Console.WriteLine("hell again"); // this will add a new line of text to the cons
 
 ### Input
 
-To read text that the user enters, you can use `Console.Read` (no new line) and `Console.ReadLine` (adds a new line). Input is always returned as a `string`.
-
-#### Input example
+To read text that the user enters use `Console.ReadLine`. Input is always returned as a `string`.
 
 ```csharp
-string input = Console.Read();
-string input2 = Console.ReadLine(); // adds a new line
+string input = Console.ReadLine();
+```
+
+#### Parsing numeric values from console input
+
+To change the type of the input string to a double, use `int.Parse()`:
+
+```csharp
+int number = int.Parse(Console.ReadLine());
+```
+
+To change the type of the input string to a double, use `double.Parse()`:
+
+```csharp
+double number = double.Parse(Console.ReadLine());
 ```
 
 ## Conditional statements
@@ -269,3 +317,51 @@ switch(place){
         Console.WriteLine("you do not receive a meal");
 }
 ```
+
+## Iteration
+
+Iteration involves looping over a block of code, typically multiple times.
+
+### While loop
+
+While loops get repeated _while_ a condition it true.
+
+Example:
+
+```csharp
+int i = 0;
+while(i < 3){
+    Console.WriteLine($"The value of i is: {i}");
+    i++;
+}
+```
+
+### Do-while loops
+
+Do-while loops work the same as while loops except, the condition gets checked after the loop runs once. Do-while loops are useful when you want your code to run at least once.
+
+```csharp
+string input;
+do
+{
+    input = Console.ReadLine();
+    Console.WriteLine($"You entered: input");
+} while (input != "stop");
+```
+
+### For loops
+
+For loops are typically used when you need a block of code to run a certain number of times. This loop will print the numbers from 1 to 10:
+
+```csharp
+for (int i = 1; i <= 10; i++)
+{
+    Console.WriteLine(i);
+}
+```
+
+The for loop consists of three parts:
+
+1. An initializing statement (`int i = 1;`). This initializes a variable used by the other parts of the for loop.
+2. A condition (`i <= 10`). The loop will run while this condition is `true`.
+3. An update (`i++`). This will run each loop and update the value of the main loop variable (`i` in this case).
