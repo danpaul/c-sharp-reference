@@ -6,6 +6,7 @@ This document serves as a quick reference for beginning C# programmers.
 
 - [About](#about)
 - [Contents](#contents)
+- [Conventions](#conventions)
 - [Variables and basic data types](#variables-and-basic-data-types)
   - [Basic data types:](#basic-data-types)
   - [Declaring and defining variables](#declaring-and-defining-variables)
@@ -36,6 +37,22 @@ This document serves as a quick reference for beginning C# programmers.
   - [While loop](#while-loop)
   - [Do-while loops](#do-while-loops)
   - [For loops](#for-loops)
+- [Arrays](#arrays)
+  - [Array indexing](#array-indexing)
+  - [Multidimensional arrays](#multidimensional-arrays)
+  - [Array lengths](#array-lengths)
+  - [Array iteration](#array-iteration)
+    - [Array iteration - for loop](#array-iteration---for-loop)
+    - [Array iteration - foreach loop](#array-iteration---foreach-loop)
+  - [Copying arrays](#copying-arrays)
+
+## Conventions
+
+In the code examples, `// ~>` is used to illustrate what would be output by the console:
+
+```csharp
+Console.WriteLine("hello!"); // ~> hello
+```
 
 ## Variables and basic data types
 
@@ -365,3 +382,144 @@ The for loop consists of three parts:
 1. An initializing statement (`int i = 1;`). This initializes a variable used by the other parts of the for loop.
 2. A condition (`i <= 10`). The loop will run while this condition is `true`.
 3. An update (`i++`). This will run each loop and update the value of the main loop variable (`i` in this case).
+
+## Arrays
+
+An array is a collection of data. Unlike a variable that can hold only one item, an array can contain multiple items.
+
+All items in an array must contain the same type of data.
+
+A basic int array declaration example:
+
+```csharp
+int[] myNumbers;
+```
+
+To use an array, a size must be specified. This can either be done when the array is first declared:
+
+```csharp
+int[] myNumbers = new int[10];
+```
+
+or after:
+
+```csharp
+int[] myNumbers;
+myNumbers = new int[10];
+```
+
+You usually must use the `new` keyword when setting the size of an array. The above array can hold 10 integers.
+
+You do not need to use the `new` keyword if you immediately set the values of the array. You set the values using curly braces and commas between the values:
+
+```csharp
+int[] myNumbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+```
+
+### Array indexing
+
+You read and write values in an array based on the item's index. The item index goes inside the square brackets. Array indexes start at 0 instead of 1.
+
+```csharp
+int[] myNumbers;
+myNumbers = new int[10];
+myNumbers[0] = 111; // set the first item in the array
+myNumbers[1] = 222; // set the second item in the array
+// ...
+
+// read the first number in the array
+int firstNumber = myNumbers[0];
+Console.WriteLine($"The first item in the array is {firstNumber}"); // ~> The first item in the array is 111
+```
+
+### Multidimensional arrays
+
+So far, we have looked at single dimensional arrays. These are like a single row in spreadsheet. Arrays can have more dimensions. For instance, a two-dimensional instead of a single row of values, can be thought of as a spreadsheet with multiple rows and columns.
+
+To declare a multidimensional array add a comma for each additional dimension the array has:
+
+```csharp
+int[,] myNumbers = new int[2,3]; // create a new two-dimensional array with 2 x 3 dimensions
+```
+
+When getting and settings values in a two-dimensional array, values for both dimensions need to be specified:
+
+```csharp
+int[,] myNumbers = new int[2,3]; // create a new 2 x 3 array
+myNumbers[0,0] = 1;
+myNumbers[0,1] = 2;
+myNumbers[0,2] = 3;
+myNumbers[1,0] = 4;
+myNumbers[1,1] = 5;
+// ...
+```
+
+The number of dimensions an array has can be accessed using the `.Rank` property:
+
+```csharp
+int[,] myNumbers = new int[2,3];
+Console.WriteLinke(myNumbers.Rank); // ~> 2
+```
+
+### Array lengths
+
+The `Array.Length` property will return the total number of elements in the array.
+
+The `Array.GetLength()` method will return the total number of elements along the dimension of the array. You use `Array.GetLength(0)` to get the first dimension of the array, `Array.GetLength(1)` to get the second dimension, etc.
+
+```csharp
+int[] myNumbers = new int[10];
+int[,] myOtherNumbers = new int[2, 3];
+
+// .Length property
+Console.WriteLine(myNumbers.Length); // ~> 10
+Console.WriteLine(myOtherNumbers.Length); // ~> 6
+
+// .GetLength() method
+Console.WriteLine(myNumbers.GetLength(0)); // ~> 10
+Console.WriteLine(myOtherNumbers.GetLength(0)); // ~> 2
+Console.WriteLine(myOtherNumbers.GetLength(1)); // ~> 3
+```
+
+### Array iteration
+
+Array iteration means looping through each element in an array. Typically a `for` or a `foreach` loop is used for this task.
+
+#### Array iteration - for loop
+
+A for loop starts at 0 and uses the array `.Length` property to loop through each element of the array:
+
+```csharp
+int[] myNumbers = new int[10];
+for (int i = 0; i < myNumbers.Length; i++) {
+    myNumbers[i] = i;
+}
+for (int i = 0; i < myNumbers.Length; i++)
+{
+    Console.WriteLine(myNumbers[i]); // ~> 0, 1, 2, 3...
+}
+```
+
+#### Array iteration - foreach loop
+
+A foreach loop automatically assigns the element of the array to a variable as you loop through the array:
+
+```csharp
+int[] myNumbers = { 2, 4, 6, 8, 10 };
+foreach(int number in myNumbers)
+{
+    Console.WriteLine(number); // ~> 2, 4, 6...
+}
+```
+
+### Copying arrays
+
+Arrays are copied by reference. That means, when you assign one array to another array, they are both referencing the same data. If you change data in the first array, it will also change data in the copied array:
+
+```csharp
+int[] myNumbers = { 11, 22, 33, 44 };
+int[] myOtherNumbers = myNumbers;
+
+myNumbers[0] = 777;
+Console.WriteLine(myOtherNumbers[0]); // ~> 777
+```
