@@ -52,6 +52,16 @@ This document serves as a quick reference for beginning C# programmers.
   - [Pass by value](#pass-by-value)
   - [Pass by ref](#pass-by-ref)
   - [Pass by ref out](#pass-by-ref-out)
+- [Enums](#enums)
+  - [Enums an ints](#enums-an-ints)
+  - [Casting enums](#casting-enums)
+  - [Iterating enums](#iterating-enums)
+- [Struct](#struct)
+  - [public properties](#public-properties)
+- [Classes](#classes)
+  - [Classes vs objects](#classes-vs-objects)
+    - [Static class methods](#static-class-methods)
+  - [Structs vs classes variable types](#structs-vs-classes-variable-types)
 
 ## Conventions
 
@@ -668,3 +678,193 @@ namespace testing
     }
 }
 ```
+
+## Enums
+
+An enum (enumeration) is a set of constant values referenced by names.
+
+```csharp
+namespace enums
+{
+    internal class Program
+    {
+        enum DayOfWeek
+        {
+            Monday,
+            Tuesday,
+            Wednesday,
+            Thursday,
+            Friday,
+            Saturday,
+            Sunday
+        }
+        static void Main(string[] args)
+        {
+            DayOfWeek today = DayOfWeek.Monday;
+            if (today == DayOfWeek.Monday)
+            {
+                Console.WriteLine("boooo!!!");
+            }
+            else if (today == DayOfWeek.Saturday || today == DayOfWeek.Sunday)
+            {
+                Console.WriteLine("hooray!");
+            }
+        }
+    }
+}
+```
+
+In the example above, an enum `DayOfWeek` is used instead of using string values or integer codes. This helps avoid typos and helps ensure our data is the correct type.
+
+### Enums an ints
+
+Enums values are backed by simple `int` values. By default, the first item in an enum will have the value `0`, the second `1`, etc. We can change the default value using the `=` sign. After assigning a value, each following enum will be one greater than the previous.
+
+```csharp
+enum DayOfWeek
+{
+    Monday = 1, // Monday is now 1 (instead of 0), Tuesday 2, etc.
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday
+}
+```
+
+### Casting enums
+
+To cast (change the type) of an enum, you will either call the `.toString()` method to get the string value or use `(int)` to get an integer value.
+
+```csharp
+DayOfWeek today = DayOfWeek.Monday;
+Console.WriteLine(today.ToString()); // ~> Monday
+Console.WriteLine((int) today); // ~> 1
+```
+
+### Iterating enums
+
+To iterate (loop through) enums, you can use a for loop.
+
+```csharp
+for (DayOfWeek day = DayOfWeek.Monday; day <= DayOfWeek.Sunday; day++)
+{
+    Console.WriteLine(day.ToString()); // ~> Monday, Tuesday...
+}
+```
+
+## Struct
+
+A struct is a structured collection of data. Structs allow you to group together related data inside a single data structure.
+
+```csharp
+namespace StructDemo
+{
+
+    internal class Program
+    {
+        struct Student
+        {
+            public string Id;
+            public string Name;
+            public int Age;
+            public int GraduationYear;
+        }
+
+
+        static void Main(string[] args)
+        {
+            Student student = new Student();
+            student.Id = "000134a";
+            student.Name = "Gallant";
+            student.Age = 25;
+            student.GraduationYear = 2085;
+
+            Console.WriteLine($"Student {student.Name} will graduate in {student.GraduationYear}");
+        }
+    }
+}
+```
+
+_note: typically, you should defined your struct in a separate file._
+
+### public properties
+
+Structs must use the keyword `public` on their properties to allow reading and writing those properties.
+
+## Classes
+
+Classes are similar to structs but they also alow methods to be grouped with the class data.
+
+```csharp
+namespace ClassDemo
+{
+    internal class Program
+    {
+        class Student
+        {
+            public string Id;
+            public string Name;
+            public int Age;
+            public int GraduationYear;
+
+            public void IntroduceYourself() {
+                Console.WriteLine($"Hello, I'm {Name} and I am {Age} years old.");
+            }
+        }
+
+
+        static void Main(string[] args)
+        {
+            Student student = new Student();
+            student.Id = "000134a";
+            student.Name = "Gallant";
+            student.Age = 25;
+            student.GraduationYear = 2085;
+
+            student.IntroduceYourself();
+        }
+    }
+}
+```
+
+_note: typically, you should defined your struct in a separate file._
+
+Like properties, class methods must use the keyword `public` to be usable outside the class.
+
+### Classes vs objects
+
+A class is like a blueprint for an object. A class defines the data and methods an object will have. An object is an instance of a class. In the example above, `Student student = new Student();` creates a new student object from the class `Student`.
+
+#### Static class methods
+
+Static class methods belong to the class, no the object (instance of the class). You do _not_ need to create an object to use a static method. For most things, you do _not_ want to use static methods. Static methods do not have access to object data (properties).
+
+```csharp
+namespace StructDemo
+{
+
+    internal class Program
+    {
+        class Student
+        {
+            // ...
+            static public void DoSomething() // static method belongs to the class, no objects
+            {
+                Console.WriteLine("I can be called without create a student object.");
+            }
+        }
+
+
+        static void Main(string[] args)
+        {
+            Student.DoSomething(); // a `new()` student does not need to be created to call a static method.
+        }
+    }
+}
+```
+
+### Structs vs classes variable types
+
+Structs are copy and pass by values. That means when you assign one struct to another, a _copy_ of the data is made. Objects are passed by ref. That means, when you assign or pass an object
