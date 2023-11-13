@@ -45,6 +45,13 @@ This document serves as a quick reference for beginning C# programmers.
     - [Array iteration - for loop](#array-iteration---for-loop)
     - [Array iteration - foreach loop](#array-iteration---foreach-loop)
   - [Copying arrays](#copying-arrays)
+- [Methods](#methods)
+  - [Method signatures](#method-signatures)
+  - [Method overloading](#method-overloading)
+  - [Method scope and passing data](#method-scope-and-passing-data)
+  - [Pass by value](#pass-by-value)
+  - [Pass by ref](#pass-by-ref)
+  - [Pass by ref out](#pass-by-ref-out)
 
 ## Conventions
 
@@ -522,4 +529,142 @@ int[] myOtherNumbers = myNumbers;
 
 myNumbers[0] = 777;
 Console.WriteLine(myOtherNumbers[0]); // ~> 777
+```
+
+## Methods
+
+Methods contain code that can perform logic, actions and procedure in code. Methods can be called multiple times, can take data in and return data.
+
+```csharp
+namespace testing
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int myNumber = AddOne(1);
+            Console.WriteLine(myNumber); // ~> 1
+        }
+        static int AddOne(int number) {
+            return number + 1;
+        }
+    }
+}
+```
+
+### Method signatures
+
+```csharp
+static int AddOne(int number) {
+    return number + 1;
+}
+```
+
+A method signature defines the method and its input and output data. In the above, example `static int AddOne(int number)` is the method signature. This is the meaning of each part of the signature:
+
+- `static` - this means the method belongs to the class itself, instead of an instance of the class (more on that later).
+- `int` is the return type. Methods can return data but they don't have to. For this method, an integer is returned. If nothing is returned from the method, `void` should be used.
+- `AddOne` is the name of the method. You will use this when you are calling (using) the method.
+- `int number` is a parameter. Parameters describe the data that gets passed into the method. The code in the method can access this data.
+
+### Method overloading
+
+Two methods can have the same name but accept a different number of arguments, this is referred to method overloading. The compiler automatically determines the correct method to call when the program is getting built.
+
+In this example, the `SaySomething()` method is overloaded:
+
+```csharp
+namespace testing
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            SaySomething("hip", "hip"); // ~> hip hip
+            SaySomething("hooray!"); // ~> hooray!
+        }
+        static void SaySomething(string word, string secondWord)
+        {
+            Console.WriteLine($"{word} {secondWord}");
+        }
+        static void SaySomething(string word) {
+            Console.WriteLine(word);
+        }
+    }
+}
+```
+
+### Method scope and passing data
+
+Data can get passed to methods in three main ways: pass by value, pass by ref, pass by ref out. Depending on how the data is passed, it will affect where and how variables are updated.
+
+### Pass by value
+
+By default, for simple data types (`int`, `double`, `string`, etc.) a copy of the data gets passed to the method. The changes that the method makes to the data only affect the copied variable. This is called passing data by value.
+
+```csharp
+namespace testing
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int number = 5;
+            SquareNumber(5);
+            Console.WriteLine(number); // ~> 5
+        }
+        static void SquareNumber(int number)
+        {
+            number = number * number;
+        }
+    }
+}
+```
+
+In this example, the value of `number` inside the `Main()` method does not change since `SquareNumber()` only receives a copy of the `number` variable.
+
+### Pass by ref
+
+Unlike pass by value, when data is passed to a method using pass by ref, the actual variable gets passed to the method _not_ a copy of the data. When data is passed by ref, changes made inside the method will affect the original data. When a method uses pass by ref, the `ref` keyword must be used in the method signature _and_ on the argument that gets passed into the method.
+
+```csharp
+namespace testing
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int number = 5;
+            SquareNumber(ref number); // `ref` is added here
+            Console.WriteLine(number); // ~> 25
+        }
+        static void SquareNumber(ref int number) // `ref` is also added here
+        {
+            number = number * number;
+        }
+    }
+}
+```
+
+### Pass by ref out
+
+Pass by ref out works similar to pass by ref except, the variable does not need to have a value set _and_ the method _must_ set a value for the pass by ref out parameter inside the method.
+
+```csharp
+namespace testing
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int number; // number has no initial value. This is allowed for `out` but not for `ref`.
+            SetToThree(out number); // `out` must be used here
+            Console.WriteLine(number); // ~> 3
+        }
+        static void SetToThree(out int number) // `out` must also be used here
+        {
+            number = 3; // out parameters _must_ be set inside the method
+        }
+    }
+}
 ```

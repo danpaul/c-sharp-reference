@@ -22,6 +22,15 @@ namespace basics
             myChar = 'a';
             myString = "hello";
             myBool = true;
+
+            int x = 10;
+            x++; // x is now 11
+            x--; // x is 10
+            x += 10; // x is 20
+            x -= 5; // x is 15
+            x *= 2; // x is 30
+            x /= 5; // x is 6
+            x %= 2; // x is 0
         }
     }
 }
