@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "data_types", "basics\data_t
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "operators", "operators\operators.csproj", "{9830EF1F-9D1E-4CA0-8058-0EF8A7FDE52E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "enums", "enums\enums.csproj", "{E42E0282-FAEB-42D9-A80A-1FD2537F679D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "enums", "enums\enums.csproj", "{E42E0282-FAEB-42D9-A80A-1FD2537F679D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StructDemo", "StructDemo\StructDemo.csproj", "{89B4F71F-9CDE-46A9-B459-E84EDD3ECE34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructDemo", "StructDemo\StructDemo.csproj", "{89B4F71F-9CDE-46A9-B459-E84EDD3ECE34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scratch", "scratch\scratch.csproj", "{068E6C02-61B1-4794-82CC-5C2CE59F0EDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{89B4F71F-9CDE-46A9-B459-E84EDD3ECE34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89B4F71F-9CDE-46A9-B459-E84EDD3ECE34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89B4F71F-9CDE-46A9-B459-E84EDD3ECE34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{068E6C02-61B1-4794-82CC-5C2CE59F0EDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{068E6C02-61B1-4794-82CC-5C2CE59F0EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{068E6C02-61B1-4794-82CC-5C2CE59F0EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{068E6C02-61B1-4794-82CC-5C2CE59F0EDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

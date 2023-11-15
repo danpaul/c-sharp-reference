@@ -62,6 +62,7 @@ This document serves as a quick reference for beginning C# programmers.
   - [Classes vs objects](#classes-vs-objects)
     - [Static class methods](#static-class-methods)
   - [Structs vs classes variable types](#structs-vs-classes-variable-types)
+- [Adding a new file for enums, structs and classes](#adding-a-new-file-for-enums-structs-and-classes)
 
 ## Conventions
 
@@ -668,10 +669,10 @@ namespace testing
         static void Main(string[] args)
         {
             int number; // number has no initial value. This is allowed for `out` but not for `ref`.
-            SetToThree(out number); // `out` must be used here
+            SetToThree(out number); // `out` must be added before the argument
             Console.WriteLine(number); // ~> 3
         }
-        static void SetToThree(out int number) // `out` must also be used here
+        static void SetToThree(out int number) // `out` must also be added to the method parameters
         {
             number = 3; // out parameters _must_ be set inside the method
         }
@@ -703,18 +704,18 @@ namespace enums
             DayOfWeek today = DayOfWeek.Monday;
             if (today == DayOfWeek.Monday)
             {
-                Console.WriteLine("boooo!!!");
+                Console.WriteLine("yawn, it's Monday");
             }
             else if (today == DayOfWeek.Saturday || today == DayOfWeek.Sunday)
             {
-                Console.WriteLine("hooray!");
+                Console.WriteLine("hooray! it is the weekend!");
             }
         }
     }
 }
 ```
 
-In the example above, an enum `DayOfWeek` is used instead of using string values or integer codes. This helps avoid typos and helps ensure our data is the correct type.
+In the example above, an enum `DayOfWeek` is used instead of using string values or integer codes. Enums are strongly typed and help avoid typos and ensure our data is of the expected type.
 
 ### Enums an ints
 
@@ -735,12 +736,37 @@ enum DayOfWeek
 
 ### Casting enums
 
-To cast (change the type) of an enum, you will either call the `.toString()` method to get the string value or use `(int)` to get an integer value.
+Casting means to change the data type of a data item. To cast an enum, you will typically either call the `.toString()` method to get the string value or use `(int)` to get an integer value.
 
 ```csharp
 DayOfWeek today = DayOfWeek.Monday;
 Console.WriteLine(today.ToString()); // ~> Monday
 Console.WriteLine((int) today); // ~> 1
+```
+
+To convert an `int` to an enum, you follow a similar pattern:
+
+```csharp
+int dayOfWeekNumber = 1;
+DayOfWeek day = (DayOfWeek) dayOfWeekNumber;
+```
+
+If you have an `int` value that you want to cast to an enum, you can check to make sure that it is a defined value using the `Enum.IsDefined()` method.
+
+```csharp
+
+int dayOfWeekNumber = 99; // invalid day of week value
+bool isValidWeekNumber = Enum.IsDefined(typeof(DayOfWeek), dayOfWeekNumber);
+
+if (isValidWeekNumber)
+{
+    DayOfWeek day = (DayOfWeek) dayOfWeekNumber;
+    Console.WriteLine($"The day for number {dayOfWeekNumber} is {day}");
+}
+else
+{
+    Console.WriteLine($"{dayOfWeekNumber} is not a day of the week!");
+}
 ```
 
 ### Iterating enums
@@ -787,7 +813,7 @@ namespace StructDemo
 }
 ```
 
-_note: typically, you should defined your struct in a separate file._
+_note: typically, you should define your struct in a separate file._
 
 ### public properties
 
@@ -829,20 +855,28 @@ namespace ClassDemo
 }
 ```
 
-_note: typically, you should defined your struct in a separate file._
+_note: typically, you should define your class in a separate file._
 
-Like properties, class methods must use the keyword `public` to be usable outside the class.
+Like properties, class methods must use the keyword `public` to be usable outside the class. If methods are only used inside the class, by the class itself `private` should be used.
 
 ### Classes vs objects
 
 A class is like a blueprint for an object. A class defines the data and methods an object will have. An object is an instance of a class. In the example above, `Student student = new Student();` creates a new student object from the class `Student`.
 
+```csharp
+Student student1 = new Student();
+Student student2 = new Student();
+Student student3 = new Student();
+```
+
+In this example `Student` is the class, `student1`, `student2`, `student3` are objects.
+
 #### Static class methods
 
-Static class methods belong to the class, no the object (instance of the class). You do _not_ need to create an object to use a static method. For most things, you do _not_ want to use static methods. Static methods do not have access to object data (properties).
+Static class methods belong to the class, not the object. You do _not_ need to create an object to use a static method. For most things, you do _not_ want to use static methods. Static methods do not have access to object data (properties).
 
 ```csharp
-namespace StructDemo
+namespace ClassDemo
 {
 
     internal class Program
@@ -850,16 +884,25 @@ namespace StructDemo
         class Student
         {
             // ...
-            static public void DoSomething() // static method belongs to the class, no objects
+            static public void StaticMethodDoSomething() // static method belongs to the class, no objects
             {
-                Console.WriteLine("I can be called without create a student object.");
+                Console.WriteLine("I can only be called without creating a student object.");
             }
+
+            public void InstanceMethodDoSomething() // Does not contain the `static` keyword. Instance methods can only be called on instances.
+            {
+                Console.WriteLine("I can only be called without creating a student object.");
+            }
+
         }
 
 
         static void Main(string[] args)
         {
             Student.DoSomething(); // a `new()` student does not need to be created to call a static method.
+
+            Student myStudent = new Student();
+            myStudent.InstanceMethodDoSomething();
         }
     }
 }
@@ -867,4 +910,16 @@ namespace StructDemo
 
 ### Structs vs classes variable types
 
-Structs are copy and pass by values. That means when you assign one struct to another, a _copy_ of the data is made. Objects are passed by ref. That means, when you assign or pass an object
+Structs are copy and pass by value. That means when you assign one struct to another, a _copy_ of the data is made. Objects are passed by ref. That means, when you assign or pass an object into a method, you are passing a reference to the underlying class. Any changes made to the object inside the method will affect the object outside the method. For structs, this is not the case. Their data is copied and then passed into the method.
+
+## Adding a new file for enums, structs and classes
+
+Typically, when you add enums, structs and classes, you'll want to add them in separate files. This will help keep your project organized. To do this, in solution explorer, right-click on your project, select "add", select "new item":
+
+![add item](./img/add-new-item.png)
+
+Choose an appropriate name for your new item.
+
+After creating, by default, a new class will be added. You can change "class" to "struct" or "enum" if needed:
+
+![add item](./img/enum.png)
