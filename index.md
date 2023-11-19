@@ -63,6 +63,14 @@ This document serves as a quick reference for beginning C# programmers.
     - [Static class methods](#static-class-methods)
   - [Structs vs classes variable types](#structs-vs-classes-variable-types)
 - [Adding a new file for enums, structs and classes](#adding-a-new-file-for-enums-structs-and-classes)
+- [Flow Control](#flow-control)
+  - [Break](#break)
+  - [Continue](#continue)
+  - [Return](#return)
+- [Debugging in Visual Studio](#debugging-in-visual-studio)
+  - [Debug demo](#debug-demo)
+- [Command line arguments](#command-line-arguments)
+  - [Command line arguments demo](#command-line-arguments-demo)
 
 ## Conventions
 
@@ -785,20 +793,19 @@ for (DayOfWeek day = DayOfWeek.Monday; day <= DayOfWeek.Sunday; day++)
 A struct is a structured collection of data. Structs allow you to group together related data inside a single data structure.
 
 ```csharp
-namespace StructDemo
+namespace scratch
 {
+
+    struct Student
+    {
+        public string Id;
+        public string Name;
+        public int Age;
+        public int GraduationYear;
+    }
 
     internal class Program
     {
-        struct Student
-        {
-            public string Id;
-            public string Name;
-            public int Age;
-            public int GraduationYear;
-        }
-
-
         static void Main(string[] args)
         {
             Student student = new Student();
@@ -826,21 +833,20 @@ Classes are similar to structs but they also alow methods to be grouped with the
 ```csharp
 namespace ClassDemo
 {
+    class Student
+    {
+        public string Id;
+        public string Name;
+        public int Age;
+        public int GraduationYear;
+
+        public void IntroduceYourself() {
+            Console.WriteLine($"Hello, I'm {Name} and I am {Age} years old.");
+        }
+    }
+
     internal class Program
     {
-        class Student
-        {
-            public string Id;
-            public string Name;
-            public int Age;
-            public int GraduationYear;
-
-            public void IntroduceYourself() {
-                Console.WriteLine($"Hello, I'm {Name} and I am {Age} years old.");
-            }
-        }
-
-
         static void Main(string[] args)
         {
             Student student = new Student();
@@ -855,9 +861,9 @@ namespace ClassDemo
 }
 ```
 
-_note: typically, you should define your class in a separate file._
+_note: normally, you should define your class in a separate file._
 
-Like properties, class methods must use the keyword `public` to be usable outside the class. If methods are only used inside the class, by the class itself `private` should be used.
+Like properties, class methods must use the keyword `public` to be usable outside the class. If methods are only used inside the class, `private` should be used.
 
 ### Classes vs objects
 
@@ -879,24 +885,22 @@ Static class methods belong to the class, not the object. You do _not_ need to c
 namespace ClassDemo
 {
 
-    internal class Program
+    class Student
     {
-        class Student
+        // ...
+        static public void StaticMethodDoSomething() // static method belongs to the class, no objects
         {
-            // ...
-            static public void StaticMethodDoSomething() // static method belongs to the class, no objects
-            {
-                Console.WriteLine("I can only be called without creating a student object.");
-            }
-
-            public void InstanceMethodDoSomething() // Does not contain the `static` keyword. Instance methods can only be called on instances.
-            {
-                Console.WriteLine("I can only be called without creating a student object.");
-            }
-
+            Console.WriteLine("I can only be called without creating a student object.");
         }
 
+        public void InstanceMethodDoSomething() // Does not contain the `static` keyword. Instance methods can only be called on instances.
+        {
+            Console.WriteLine("I can only be called without creating a student object.");
+        }
+    }
 
+    internal class Program
+    {
         static void Main(string[] args)
         {
             Student.DoSomething(); // a `new()` student does not need to be created to call a static method.
@@ -923,3 +927,112 @@ Choose an appropriate name for your new item.
 After creating, by default, a new class will be added. You can change "class" to "struct" or "enum" if needed:
 
 ![add item](./img/enum.png)
+
+## Flow Control
+
+Flow control describes the flow and order that operations are performed within a program.
+
+### Break
+
+To exit out of a loop early, you can use the `break;` statement.
+
+```csharp
+for (int i = 0; i < 5; i++)
+{
+    if (i == 3)
+    {
+        break;
+    }
+    Console.WriteLine(i); // ~> 0, 1, 2
+}
+```
+
+The above snippet will print 0, 1, and 2 but will `break` and exist the loop before 3 is printed.
+
+### Continue
+
+The `continue` statement causes the loop to continue with the next iteration (the next loop) but skips all the code in the loop after the `continue statement`.
+
+```csharp
+for (int i = 0; i < 7; i++)
+{
+    if (i % 2 == 0)
+    {
+        continue;
+    }
+    Console.WriteLine(i); // ~> 1, 3, 5
+}
+```
+
+The above loop will print only the odd numbers. Whenever an even number occurs (`i % 2 == 0`), the `continue` is executed causing the rest of the code to be skipped.
+
+### Return
+
+The `return` statement returns from a method. No code after `return` will get executed.
+
+```csharp
+void MyMethod()
+{
+    Console.WriteLine("method starting");
+    for (int i = 0; i < 5; i++)
+    {
+        if (i == 2)
+        {
+            return;
+        }
+        Console.WriteLine(i);
+    }
+    Console.WriteLine("method ending");
+}
+```
+
+This method will log the following to the console:
+
+```
+method starting
+0
+1
+```
+
+"method ending" never gets printed. Once the `return` statement gets executed, the method returns control to the calling method.
+
+## Debugging in Visual Studio
+
+Debugging allows us to view the values of our variables while our program is running. A _breakpoint_ is a point in our code where we want the debugger to pause and allow us to inspect our variables.
+
+To add a breakpoint in Visual Studio, click in the left margin. Once a breakpoint is added, you can remove it by clicking on it again.
+
+To run the debugger, click the play button in the toolbar or press _f5_. To continue to the next breakpoint, click continue in the toolbar or press _f5_ again. To stop the debugger, pres _shift + f5_ or click the stop button in the toolbar.
+
+When the debugger pauses your code, you will see the variable data in the output section.
+
+![debug](./img/debug.png)
+
+### Debug demo
+
+<video width="978" height="854" controls>
+  <source src="./video/debug.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+## Command line arguments
+
+Command line arguments are arguments that get passed into our program. If our program is started from the terminal, we can add command arguments there. If we start the program via Visual Studio, we will need to add them different.
+
+To add command line arguments in Visual Studio:
+
+- right click on your project
+- select properties
+- click debug -> general -> open debug launch profiles ui
+- add command line arguments under "command line arguments" section
+- you can add multiple arguments by separating each argument by either a space or a new line
+
+![command line arguments](./img/command-line-arguments.png)
+![command line arguments](./img/command-line-arguments-02.png)
+
+### Command line arguments demo
+
+<video width="926" height="479" controls>
+  <source src="./video/command-line-arguments.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "scratch": {
+      "commandName": "Project",
+      "commandLineArgs": "23 35 46 foo"
+    }
+  }
+}

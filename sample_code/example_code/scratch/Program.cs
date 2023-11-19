@@ -1,20 +1,21 @@
 ﻿namespace scratch
 {
+
+    class Foo
+    {
+        public int bar = 5;
+    }
+
     internal class Program
     {
+
         static void Main(string[] args)
         {
-            int dayOfWeekNumber = 99;
-            DayOfWeek day;
-            bool isValidWeekNumber = Enum.IsDefined(typeof(DayOfWeek), dayOfWeekNumber);
-            if (isValidWeekNumber)
+            foreach (string arg in args)
             {
-                day = (DayOfWeek)dayOfWeekNumber;
+                Console.WriteLine(arg);
             }
-            else
-            {
-                Console.WriteLine($"{dayOfWeekNumber} is not a day of the week!");
-            }
+
         }
     }
 }
