@@ -71,6 +71,9 @@ This document serves as a quick reference for beginning C# programmers.
   - [Debug demo](#debug-demo)
 - [Command line arguments](#command-line-arguments)
   - [Command line arguments demo](#command-line-arguments-demo)
+- [Lists](#lists)
+  - [Iterating lists](#iterating-lists)
+- [Dictionary](#dictionary)
 
 ## Conventions
 
@@ -1036,3 +1039,97 @@ To add command line arguments in Visual Studio:
   <source src="./video/command-line-arguments.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
+
+## Lists
+
+C# lists are used to store multiple elements of the same type. Lists are a lot like arrays but are not fixed in size so elements can be added and removed dynamically.
+
+Lists are a _generic_ type. That means, you must specify the type of data your list will hold.
+
+```csharp
+List<int> myIntList = new List<int>();
+List<float> myFloatList = new List<float>();
+List<string> myStringList = new List<string>();
+```
+
+The example above creates a new integer list. The `<int>` part means the list can hold only integers.
+
+You use the `.Add()` method to add elements to the list.
+
+```csharp
+list.Add(23);
+list.Add(45);
+```
+
+Once the elements are added. You can read and write the elements just like arrays:
+
+```csharp
+Console.WriteLine(list[0]);
+list[0] = 77;
+```
+
+### Iterating lists
+
+Lists can be iterated through using either a `for` loop or a `foreach` loop.
+
+Lists use the `.Count` attributed to determine their length
+
+```csharp
+List<int> list = new List<int>();
+list.Add(23);
+list.Add(35);
+list.Add(17);
+for (int i = 0; i < list.Count; i++) // Note! use .Count instead of .Length for lists
+{
+    Console.WriteLine(list[i]); // print list element
+    list[i]++; // increment list element
+}
+foreach (int item in list)
+{
+    Console.WriteLine(item); // write list item
+}
+```
+
+## Dictionary
+
+A C# dictionary is used to associate a key with a value. Dictionary's are generics so, we must specify the type of the key and the value.
+
+Creating a new dictionary:
+
+```csharp
+Dictionary<int, string> students = new Dictionary<int, string>();
+```
+
+The `<int, string>` part of the declaration means that the key for the dictionary is an `int` and the value is a `string`.
+
+To add items to a dictionary, you use the `.Add(key, value)` method:
+
+```csharp
+Dictionary<int, string> students = new Dictionary<int, string>();
+students.Add(123, "Orsen");
+```
+
+To access items in the dictionary, you use square brackets and the item's key:
+
+```csharp
+Dictionary<int, string> students = new Dictionary<int, string>();
+students.Add(123, "Orsen");
+Console.WriteLine(students[123]); // ~> Orsen
+```
+
+If you try to add two items with the same key, you will get an error. To check if a key already exists in the dictionary, use the `ContainsKey()` method:
+
+```csharp
+// create a new dictionary with int key and string value
+Dictionary<int, string> students = new Dictionary<int, string>();
+if (students.ContainsKey(123))
+{
+    Console.WriteLine("student 123 already exists!");
+}
+else
+{
+    students.Add(123, "Orsen");
+}
+
+Console.WriteLine(students[123]); // ~> Orsen
+```
