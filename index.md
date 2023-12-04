@@ -1177,12 +1177,7 @@ StreamReader reader = new StreamReader(filename);
 string line;
 while ((line = reader.ReadLine()) != null)
 {
-    string normalizedLine = line.ToLower();
-    if (normalizedLine.Contains(normalizedWord))
-    {
-        foundCount++;
-        DisplayWordInLine(line, normalizedWord);
-    }
+    Console.WriteLine(line);
 }
 reader.Close();
 ```
