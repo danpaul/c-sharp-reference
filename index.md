@@ -74,6 +74,11 @@ This document serves as a quick reference for beginning C# programmers.
 - [Lists](#lists)
   - [Iterating lists](#iterating-lists)
 - [Dictionary](#dictionary)
+- [File IO](#file-io)
+  - [File paths](#file-paths)
+  - [Reading file data](#reading-file-data)
+  - [Writing data to file](#writing-data-to-file)
+  - [Checking for existence of a file](#checking-for-existence-of-a-file)
 
 ## Conventions
 
@@ -1132,4 +1137,78 @@ else
 }
 
 Console.WriteLine(students[123]); // ~> Orsen
+```
+
+## File IO
+
+File IO stands for file input/output. With file IO, we either _read_ data from the file (_input_) or _write_ data to a file (_output_).
+
+When performing file operations in C#, we need to use the `System.IO` library. We do this by declaring the following at the top of our file:
+
+```csharp
+using System.IO;
+```
+
+Whenever we read or write file data, we perform these basic steps:
+
+1. open file
+2. read or write data
+3. close file
+
+It is important to close the file to prevent wasting system resources.
+
+### File paths
+
+When you access files in your C# program, you will need to specify the path relative to your _built_ application, _not_ the location of your program file.
+
+In practice, this means you will likely need to move up three directory file levels to access a file at the same directory level as your `Program.cs` file:
+
+```csharp
+string filename = "..\\..\\..\\some-file.txt";
+```
+
+### Reading file data
+
+Use the `StreamReader` class to read file data.
+
+```csharp
+string filename = "..\\..\\..\\some-file.txt";
+StreamReader reader = new StreamReader(filename);
+string line;
+while ((line = reader.ReadLine()) != null)
+{
+    string normalizedLine = line.ToLower();
+    if (normalizedLine.Contains(normalizedWord))
+    {
+        foundCount++;
+        DisplayWordInLine(line, normalizedWord);
+    }
+}
+reader.Close();
+```
+
+### Writing data to file
+
+To write data to a file, you can use the `StreamWriter` class.
+
+```csharp
+string filename = "..\\..\\..\\some-file.txt";
+StreamWriter writer = new StreamWriter(filename);
+writer.WriteLine("foo");
+writer.WriteLine("bar");
+writer.WriteLine("baz");
+writer.Close();
+```
+
+### Checking for existence of a file
+
+You can use the `File.Exists()` method to determine if a file already exists.
+
+```csharp
+string filename = "..\\..\\..\\some-file.txt";
+if(File.Exists(filename)){
+    // now we can safely open the file
+    StreamReader reader = new StreamReader(filename);
+    // ...
+}
 ```
