@@ -79,6 +79,8 @@ This document serves as a quick reference for beginning C# programmers.
   - [Reading file data](#reading-file-data)
   - [Writing data to file](#writing-data-to-file)
   - [Checking for existence of a file](#checking-for-existence-of-a-file)
+- [Try/catch](#trycatch)
+  - [Throwing errors](#throwing-errors)
 
 ## Conventions
 
@@ -1205,5 +1207,57 @@ if(File.Exists(filename)){
     // now we can safely open the file
     StreamReader reader = new StreamReader(filename);
     // ...
+}
+```
+
+## Try/catch
+
+To prevent exceptions from causing your application to crash, you can use a try/catch block.
+
+```csharp
+try
+{
+    Console.WriteLine("Input a string value that can not be parsed to an int to trigger an error: ");
+    int number = int.Parse(Console.ReadLine());
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message); // ~> Input string was not in a correct format.
+}
+```
+
+If you have code that needs to run whether or not an exception occurs, you can use a `finally` block
+
+```csharp
+try{
+    // ...
+}
+catch (Exception e){
+// ...
+}
+finally{
+    Console.WriteLine("This block will get executed whether or not an error occurs.");
+}
+```
+
+### Throwing errors
+
+If instead of catching an exception, you want to create one, you can throw a new exception.
+
+When you throw an exception, you pass a `string` argument to the exception constructor which becomes the exception message:
+
+```csharp
+try
+{
+    Console.Write("Input an int value greater than 100 to throw an error.");
+    int number = int.Parse(Console.ReadLine());
+    if (number > 100) {
+        // the string value here, becomes the exception message
+        throw new Exception("Number can not be greater than 100!");
+    }
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message); // ~> Number can not be greater than 100!
 }
 ```
