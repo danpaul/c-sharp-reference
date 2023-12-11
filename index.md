@@ -7,6 +7,7 @@ This document serves as a quick reference for beginning C# programmers.
 - [About](#about)
 - [Contents](#contents)
 - [Conventions](#conventions)
+- [Visual Studio keyboard shortcuts](#visual-studio-keyboard-shortcuts)
 - [Variables and basic data types](#variables-and-basic-data-types)
   - [Basic data types:](#basic-data-types)
   - [Declaring and defining variables](#declaring-and-defining-variables)
@@ -81,6 +82,7 @@ This document serves as a quick reference for beginning C# programmers.
   - [Checking for existence of a file](#checking-for-existence-of-a-file)
 - [Try/catch](#trycatch)
   - [Throwing errors](#throwing-errors)
+- [Class Libraries](#class-libraries)
 
 ## Conventions
 
@@ -89,6 +91,10 @@ In the code examples, `// ~>` is used to illustrate what would be output by the 
 ```csharp
 Console.WriteLine("hello!"); // ~> hello
 ```
+
+## Visual Studio keyboard shortcuts
+
+Keyboard shortcuts can improve your efficiency. View [this guide](./keyboard-shortcuts.html) for a list of keyboard shortcuts.
 
 ## Variables and basic data types
 
@@ -1259,5 +1265,65 @@ try
 catch (Exception e)
 {
     Console.WriteLine(e.Message); // ~> Number can not be greater than 100!
+}
+```
+
+## Class Libraries
+
+Class libraries allow you to share code between different projects in your solution.
+
+To add a new class library, right-click on your solution, select "add" -> "new project":
+
+![](./img/add-new-project.png)
+
+In the template selector, search for "class library" and select the .Net Standard (_not framework_) class library template:
+
+![](img/select-class-library.png)
+
+Name your class library something relevant. You can use general names like "Utils" or "Tools" if your class library will contain different types of utilities.
+
+Visual Studio will create a default class with a name like "class1". You can rename this to something more relevant (i.e. "UserInput", "StringUtilities", "NumberParsing", etc) by right-clicking on the class and selecting "rename":
+
+![](img/rename-class-library-class.png)
+
+It is of the case that class libraries contain only helper methods and do not need to track or maintain data. In these cases, they can contain only static methods:
+
+```csharp
+namespace Utils
+{
+    public class UserInput
+    {
+        public static string Get(string question)
+        {
+            Console.Write(question);
+            return Console.ReadLine();
+        }
+    }
+}
+```
+
+To use your class library in other projects in your solution, you must add a project reference by right-clicking on your project and selecting add -> project reference:
+
+![](./img/add-project-reference.png)
+
+You then select the util library you created:
+
+![](./img/select-project-reference.png)
+
+After adding the reference, you can start using the class library in your project:
+
+```csharp
+using Utils;
+
+namespace assignment1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string name = UserInput.Get("What is your name? ");
+            Console.WriteLine($"welcome, {name}!");
+        }
+    }
 }
 ```
