@@ -1286,7 +1286,7 @@ Visual Studio will create a default class with a name like "class1". You can ren
 
 ![](img/rename-class-library-class.png)
 
-It is of the case that class libraries contain only helper methods and do not need to track or maintain data. In these cases, they can contain only static methods:
+It is often the case that class libraries contain only helper methods and do not need to track or maintain data. In these cases, they can contain only static methods:
 
 ```csharp
 namespace Utils
